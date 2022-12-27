@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Apple Music Style Bubble UI</title>
+  <style>
+    #bubbles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0
+}
+  </style>
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div id="bubbles"></div>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.min.js'></script>
+  <script>
+var nodes = new vis.DataSet([
+  {label: "result",},
+  {label: "Experimental"},
+  {label: "Experimental"},
+  {label: "Experimental"},
+  {label: "Experimental"},
+  {label: "Experimental"},
+  {label: "Experimental"},
+  {label: "Electronic"},
+]);
+var edges = new vis.DataSet();
+
+var container = document.getElementById('bubbles');
+var data = {
+  nodes: nodes,
+  edges: edges
+};
+
+var options = {
+  nodes: {borderWidth:0,shape:"circle", 'height': 600, 'width': 150,color:{background:'#F92C55', highlight:{background:'#F92C55', border: '#F92C55'}},font:{color:'#fff'}},
+  physics: {
+    stabilization: false,
+    minVelocity:  0.01,
+    solver: "repulsion",
+    repulsion: {
+      nodeDistance: 60
+     
+    }
+  }
+};
+var network = new vis.Network(container, data, options);
+
+
+
+// Events
+network.on("click", function(e) {
+  if (e.nodes.length) {
+    var node = nodes.get(e.nodes[0]);
+    // Do something
+    nodes.update(node);
+  }
+});
+
+container.on("mouse-wheel", function(event) {
+  // prevents zooming with the mouse-wheel event
+  event.stopPropagation();
+});
+  </script>
+
+</body>
+</html>
